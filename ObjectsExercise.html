@@ -12,11 +12,11 @@
     <button onclick="Game('Scissor')">Scissor</button>
     <button onclick="resetScore()">Reset Score</button>
     <script>
-        const score = { //Object to keep track of scores
-            user: 0,
-            computer: 0,
-            ties: 0
-        };
+        const score = JSON.parse(localStorage.getItem('score')) || { // Object and Used Local Storage to save score
+                user: 0,
+                computer: 0,
+                ties: 0
+            };
         function Game(userChoice) { // Function to play the game
             let choice;
             const random = Math.random();
@@ -44,6 +44,7 @@
                 result = "Computer wins!";
                 score.computer++;
             }
+            localStorage.setItem('score', JSON.stringify(score)); // Save score to local storage
             alert(
                 `You chose: ${userChoice}! \n` + `Computer chose: ${choice}! \n` + `${result}\n` + `Score - You: ${score.user}, Computer: ${score.computer}, Ties: ${score.ties}`
             );
