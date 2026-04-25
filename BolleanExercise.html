@@ -12,61 +12,33 @@
             Scissors > Paper
             Paper > Rock
         */
-            <h2>Rock Paper Scissors</h2>
-            <button onclick="
-                const Rock = Math.random();
-                if (Rock >= 0 && Rock < 1/3)
-                {
-                    console.log('Computer chose Rock');
-                    console.log('It is a tie!');
-                }
-                else if (Rock >= 1/3 && Rock < 2/3)
-                {
-                    console.log('Computer chose Paper');
-                    console.log('Computer wins!');
-                }
-                else
-                {
-                    console.log('Computer chose Scissors');
-                    console.log('You win!');
-                }
-            ">Rock</button>
-            <button onclick="
-                const Paper = Math.random();
-                if (Paper >= 0 && Paper < 1/3)
-                {
-                    console.log('Computer chose Rock');
-                    console.log('Computer wins!');
-
-                }
-                else if (Paper >= 1/3 && Paper < 2/3)
-                {
-                    console.log('Computer chose Paper');
-                    console.log('It is a tie!');
-                }
-                else
-                {
-                    console.log('Computer chose Scissors');
-                    console.log('You win!');
-                }
-            ">Paper</button>
-            <button onclick="
-                const Scissors = Math.random();
-                if (Scissors >= 0 && Scissors < 1/3)
-                {
-                    console.log('Computer chose Rock');
-                    console.log('You win!');
-                }
-                else if (Scissors >= 1/3 && Scissors < 2/3)
-                {
-                    console.log('Computer chose Paper');
-                    console.log('Computer wins!');
-                }
-                else
-                {
-                    console.log('Computer chose Scissors');
-                    console.log('It is a tie!');
-                }
-            ">Scissors</button>
-        </script>
+        function Game(userChoice) {
+            let choice;
+            const random = Math.random();
+            if (random < 1/3) {
+                choice = 'rock';
+            } else if (random < 2/3) {
+                choice = 'paper';
+            } else {
+                choice = 'scissor';
+            }
+            let result;
+            if (userChoice === choice) {
+                result = "It's a tie!";
+            } 
+            else if (
+                (userChoice === 'rock' && choice === 'scissor') ||
+                (userChoice === 'paper' && choice === 'rock') ||
+                (userChoice === 'scissor' && choice === 'paper')
+            ) {
+                result = "You win!";
+            }
+            else {
+                result = "Computer wins!";
+            }
+            alert(
+                `You chose: ${userChoice}! \n` + `Computer chose: ${choice}! \n` + `${result}`
+            );
+        }
+    </script>
     </body>

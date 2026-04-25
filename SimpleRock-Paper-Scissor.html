@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissor</title>
+</head>
+<body>
+
+    <h1>Rock Paper Scissor Game</h1>
+
+    <button onclick="Game('Rock')">Rock</button>
+    <button onclick="Game('Paper')">Paper</button>
+    <button onclick="Game('Scissor')">Scissor</button>
+
+    <p class="js-Result"></p>
+    <p class="js-Score"></p>
+
+    <button onclick="resetScore()">Reset Score</button>
+
+    <script>
+        let score = JSON.parse(localStorage.getItem('score')) || {
+            user: 0,
+            computer: 0,
+            ties: 0
+        };
+
+        updateScore();
+
+        function Game(userChoice) {
+            let choice;
+            const random = Math.random();
+
+            if (random < 1/3) {
+                choice = 'Rock';
+            } else if (random < 2/3) {
+                choice = 'Paper';
+            } else {
+                choice = 'Scissor';
+            }
+
+            let result;
+
+            if (userChoice === choice) {
+                result = "It's a tie!";
+                score.ties++;
+            } 
+            else if (
+                (userChoice === 'Rock' && choice === 'Scissor') ||
+                (userChoice === 'Paper' && choice === 'Rock') ||
+                (userChoice === 'Scissor' && choice === 'Paper')
+            ) {
+                result = "You win!";
+                score.user++;
+            } 
+            else {
+                result = "Computer wins!";
+                score.computer++;
+            }
+
+            localStorage.setItem('score', JSON.stringify(score));
+
+            updateScore();
+            updateResult(result, userChoice, choice);
+        }
+
+        function resetScore() {
+            score = { user: 0, computer: 0, ties: 0 };
+            localStorage.setItem('score', JSON.stringify(score));
+
+            updateScore();
+            updateResult("Score has been reset!", "", "");
+        }
+
+        function updateScore() {
+            document.querySelector('.js-Score').innerHTML =
+                `Score - You: ${score.user}, Computer: ${score.computer}, Ties: ${score.ties}`;
+        }
+
+        function updateResult(result, userChoice, choice) {
+            document.querySelector('.js-Result').innerHTML =
+                `${result}<br>You chose: ${userChoice} | Computer Choose: ${choice}`;
+        }
+    </script>
+
+</body>
+</html>

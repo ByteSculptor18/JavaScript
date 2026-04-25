@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Projects</title>
+</head>
+<body>
+    <p>Are You Gay?!</p>
+    <button class="js-button1" onclick="NoButton()">No</button>
+    <button class="js-button2" onclick="YesButton()">Yes</button>
+    <script>
+        function NoButton(){
+        const buttonElement = document.querySelector('.js-button1');
+
+        if (buttonElement.innerText === 'No') {
+            buttonElement.innerText = 'LOL';
+        } else {
+            buttonElement.innerText = 'No';
+        }
+        }
+        function YesButton(){
+        const button = document.querySelector('.js-button2');
+
+        if (button.innerText === 'Yes') {
+            button.innerText = 'EWWW';
+        } else {
+            button.innerText = 'Yes';
+        }
+        }
+    </script>
+</body>
+</html>
