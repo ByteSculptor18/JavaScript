@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Variable Exercise</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2>Cart Quantity</h2>
+        <button onclick="console.log(`Cart Quantity: ${quantity}`);">show Quantity</button>
+        <button onclick="quantity = quantity + 1">Increase Quantity</button>
+        <button onclick="if (quantity > 0) { quantity = quantity - 1 }">Decrease Quantity</button>
+        <button onclick="quantity = 0; console.log('Cart was Reset')">Reset Quantity</button>
+        <script>
+            let quantity = 0;
+        </script>
+    </body>
+</html>
