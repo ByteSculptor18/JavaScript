@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Amazon Shipping Calculator</title>
+</head>
+<body>
+
+    <h1>Amazon Shipping Calculator</h1>
+
+    <p>Orders under $500 → Shipping: $50</p>
+    <p>Orders $500 or more → Free Shipping</p>
+
+    <input type="number" id="orderAmount" placeholder="Enter order amount">
+    <button onclick="calculate()">Calculate</button>
+
+    <p id="shippingCost"></p>
+    <p id="totalCost"></p>
+
+    <script>
+        function getShipping(orderAmount) {
+            return orderAmount < 500 ? 50 : 0;
+        }
+
+        function calculate() {
+            const orderAmount = parseFloat(document.getElementById('orderAmount').value);
+
+            if (!(orderAmount) || orderAmount < 0) {
+                document.getElementById('shippingCost').innerText = "Enter a valid amount.";
+                document.getElementById('totalCost').innerText = "";
+                return;
+            }
+
+            const shipping = getShipping(orderAmount);
+            const total = orderAmount + shipping;
+
+            document.getElementById('shippingCost').innerText =
+                `Shipping Cost: $${shipping}`;
+
+            document.getElementById('totalCost').innerText =
+                `Total Cost: $${total}`;
+        }
+    </script>
+
+</body>
+</html>
