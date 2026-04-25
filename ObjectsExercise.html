@@ -12,7 +12,7 @@
     <button onclick="Game('Scissor')">Scissor</button>
     <button onclick="resetScore()">Reset Score</button>
     <script>
-        const score = JSON.parse(localStorage.getItem('score')) || { // Object and Used Local Storage to save score
+        let score = JSON.parse(localStorage.getItem('score')) || { // Object and Used Local Storage to save score
                 user: 0,
                 computer: 0,
                 ties: 0
