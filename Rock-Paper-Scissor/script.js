@@ -74,6 +74,5 @@ function updateResult(result, userChoice, choice) {
         <div>
             <p>Computer</p>
             <img src="${images[choice]}" class="move-img">
-        </div>
-    `;
+        </div>`;
 }
