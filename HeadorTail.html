@@ -3,40 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Toss</title>
+    <title>Toss</title>
 </head>
 <body>
-    <style>
-        button {
-            background-color: red;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px 15px;
-            margin: 5px;
-        }
-
-        p {
-            font-size: 16px;
-            color: blue;
-        }
-    </style>
-    <h1>HEADS OR TAILS</h1>
-    <button onclick="Game('HEADS')">HEADS</button>
-    <button onclick="Game('TAILS')">TAILS</button>
+    <p>HEADS OR TAILS</p>
+    <button class="btn1" onclick="Game('HEADS')">HEADS</button>
+    <button class="btn2" onclick="Game('TAILS')">TAILS</button>
+    <p id="result"></p>
     <script>
     function Game(UserChoice){
         let choice;
         const rand = Math.random();
+
         if (rand < 0.5){
             choice = 'HEADS';
-        }
-        else{
+        } else {
             choice = 'TAILS';
         }
-        alert(`You chose: ${UserChoice}\nCoin landed on: ${choice}`);
-    } 
-    </script>
 
+        let result;
+
+        if (UserChoice === choice) {
+            result = "WIN";
+        } else {
+            result = "LOSE";
+        }
+
+        document.getElementById("result").innerHTML =
+        `You chose: ${UserChoice}<br>Coin: ${choice}<br>Result: ${result}`;
+    }
+    </script>
 </body>
 </html>
