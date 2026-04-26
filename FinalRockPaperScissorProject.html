@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissor</title>
+    <style>
+        body {
+            background-color: rgb(25, 25, 25);
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+
+        .tittle {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: transparent;
+            border: 3px solid white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        button img {
+            width: 50px;
+            height: 50px;
+            display: block;
+            margin: auto;
+        }
+
+        button p {
+            margin-top: 5px;
+        }
+
+        .js-Result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .moves {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+
+        .move-img {
+            width: 70px;
+            height: 70px;
+            transition: transform 0.2s;
+        }
+
+        .move-img:hover {
+            transform: scale(1.2);
+        }
+
+        .moves p {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <p class="tittle">Rock Paper Scissor Game</p>
+
+    <div class="choices">
+        <button onclick="Game('Rock')">
+            <img src="rock.png">
+            <p>Rock</p>
+        </button>
+
+        <button onclick="Game('Paper')">
+            <img src="paper.png">
+            <p>Paper</p>
+        </button>
+
+        <button onclick="Game('Scissor')">
+            <img src="scissor.png">
+            <p>Scissor</p>
+        </button>
+    </div>
+
+    <p class="js-Result"></p>
+    <div class="js-Moves"></div>
+    <p class="js-Score"></p>
+
+    <button onclick="resetScore()">Reset Score</button>
+
+    <script>
+        let score = JSON.parse(localStorage.getItem('score')) || {
+            user: 0,
+            computer: 0,
+            ties: 0
+        };
+
+        const images = {
+            Rock: 'rock.png',
+            Paper: 'paper.png',
+            Scissor: 'scissor.png'
+        };
+
+        updateScore();
+
+        function Game(userChoice) {
+            const choices = ['Rock', 'Paper', 'Scissor'];
+            const choice = choices[Math.floor(Math.random() * 3)];
+
+            let result;
+
+            if (userChoice === choice) {
+                result = "It's a tie!";
+                score.ties++;
+            } 
+            else if (
+                (userChoice === 'Rock' && choice === 'Scissor') ||
+                (userChoice === 'Paper' && choice === 'Rock') ||
+                (userChoice === 'Scissor' && choice === 'Paper')
+            ) {
+                result = "You win!";
+                score.user++;
+            } 
+            else {
+                result = "Computer wins!";
+                score.computer++;
+            }
+
+            localStorage.setItem('score', JSON.stringify(score));
+
+            updateScore();
+            updateResult(result, userChoice, choice);
+        }
+
+        function resetScore() {
+            score = { user: 0, computer: 0, ties: 0 };
+            localStorage.setItem('score', JSON.stringify(score));
+
+            updateScore();
+            updateResult("Score has been reset!", "", "");
+        }
+
+        function updateScore() {
+            document.querySelector('.js-Score').innerHTML =
+                `Score - You: ${score.user}, Computer: ${score.computer}, Ties: ${score.ties}`;
+        }
+
+        function updateResult(result, userChoice, choice) {
+            const resultEl = document.querySelector('.js-Result');
+            const movesEl = document.querySelector('.js-Moves');
+
+            resultEl.innerHTML = result;
+
+            if (!userChoice || !choice) {
+                movesEl.innerHTML = "";
+                return;
+            }
+
+            movesEl.innerHTML = `
+                <div class="moves">
+                    <div>
+                        <p>You</p>
+                        <img src="${images[userChoice]}" class="move-img">
+                    </div>
+
+                    <div>
+                        <p>Computer</p>
+                        <img src="${images[choice]}" class="move-img">
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+
+</body>
+</html>

@@ -4,11 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toss</title>
+    <style>
+        .st1{
+            border: none;
+            background-color: black;
+            color: white;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-right: 15px;
+            padding-left: 15px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .st2{
+            border: none;
+            background-color: black;
+            color: white;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            padding-right: 15px;
+            padding-left: 15px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <p>HEADS OR TAILS</p>
-    <button class="btn1" onclick="Game('HEADS')">HEADS</button>
-    <button class="btn2" onclick="Game('TAILS')">TAILS</button>
+    <h1>HEADS OR TAILS</h1>
+    <button class="btn1 st1" onclick="Game('HEADS')">HEADS</button>
+    <button class="btn2 st2" onclick="Game('TAILS')">TAILS</button>
     <p id="result"></p>
     <script>
     function Game(UserChoice){
