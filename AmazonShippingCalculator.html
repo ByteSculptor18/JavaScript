@@ -23,21 +23,21 @@
         }
 
         function calculate() {
-            const orderAmount = parseFloat(document.getElementById('orderAmount').value);
+            const orderAmount = parseFloat(document.querySelector('#orderAmount').value);
 
             if (!(orderAmount) || orderAmount < 0) {
-                document.getElementById('shippingCost').innerText = "Enter a valid amount.";
-                document.getElementById('totalCost').innerText = "";
+                document.querySelector('#shippingCost').innerText = "Enter a valid amount.";
+                document.querySelector('#totalCost').innerText = "";
                 return;
             }
 
             const shipping = getShipping(orderAmount);
             const total = orderAmount + shipping;
 
-            document.getElementById('shippingCost').innerText =
+            document.querySelector('#shippingCost').innerText =
                 `Shipping Cost: $${shipping}`;
 
-            document.getElementById('totalCost').innerText =
+            document.querySelector('#totalCost').innerText =
                 `Total Cost: $${total}`;
         }
     </script>
