@@ -8,10 +8,11 @@
 
     <h1>Amazon Shipping Calculator</h1>
 
-    <p>Orders under $500 → Shipping: $50</p>
+    <p>Orders under $500 → Shipping: $5</p>
     <p>Orders $500 or more → Free Shipping</p>
 
-    <input type="number" id="orderAmount" placeholder="Enter order amount">
+    <input type="number" id="orderAmount" placeholder="Enter order amount" onkeydown="
+    console.log(Type(event.key));">
     <button onclick="calculate()">Calculate</button>
 
     <p id="shippingCost"></p>
@@ -19,7 +20,7 @@
 
     <script>
         function getShipping(orderAmount) {
-            return orderAmount < 500 ? 50 : 0;
+            return orderAmount < 500 ? 5 : 0;
         }
 
         function calculate() {
@@ -39,6 +40,20 @@
 
             document.querySelector('#totalCost').innerText =
                 `Total Cost: $${total}`;
+        }
+        function Type(value) {
+            if (value >= '0' && value <= '9') {
+                return "Number";
+            } else if (value === '.' || value === '-') {
+                return "Decimal or Negative Sign";
+            } else if (value === 'Backspace' || value === 'Delete' || value === 'ArrowLeft' || value === 'ArrowRight') {
+                return "Editing Key";
+            } else if (value === 'Enter') {
+                calculate();
+                return "Enter Key";
+            } else {
+                return "Invalid Key";
+            }
         }
     </script>
 
