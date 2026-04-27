@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Array Exercise</title>
+    <link rel="stylesheet" href="Style/todoStyle.css">
 </head>
 <body>
-    <p>To Do List</p>
-    <input placeholder="Tasks" class="js-input" onkeydown="
-        console.log(Type(event.key))">
-    <input type="date" class="js-date">
-    <button onclick="
-    addElement()">Add Task</button>
+    <h1>To Do List</h1>
+    <div class="input-row">
+        <input placeholder="Tasks" class="js-input" onkeydown="Type(event.key)">
+        <input type="date" class="js-date" onkeydown="Type(event.key)">
+        <button onclick="addElement()" class="add-btn">Add Task</button>
+    </div>
     <div class="js-tasks"></div>
     <script src = 'Scripts/To-Do-List.js'></script>
 </body>

@@ -30,10 +30,11 @@ function Render(){
         const todoObject = arr[i];
 
         print += `
-        <p>
-            ${i + 1}. ${todoObject.name} (${todoObject.date || "No date"})
-            <button onclick="removeElement(${i})">Remove</button>
-        </p>`;
+            <div class="task-item">
+                <span>${todoObject.name}</span>
+                <span>${todoObject.date}</span>
+                <button class="delete-btn" onclick="removeElement(${i})">Delete</button>
+            </div>`;
     }
 
     val.innerHTML = print;

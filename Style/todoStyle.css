@@ -1,0 +1,67 @@
+/* Layout */
+.input-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Make ALL same size */
+.input-row input,
+.input-row button {
+    width: 180px;        
+    height: 45px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Add Button (Green) */
+.add-btn {
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background-color: darkgreen;
+}
+
+/* Delete Button (Red) */
+.delete-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
+
+/* Task container */
+.js-tasks {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 10px;
+    width: 60%;
+    margin: auto;
+}
+
+/* Each row */
+.task-item {
+    display: contents; /* makes children align to grid */
+}
+
+/* Styling cells */
+.js-tasks span {
+    background-color: #f5f5f5;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+}
