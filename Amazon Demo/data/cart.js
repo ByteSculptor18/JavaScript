@@ -1,4 +1,4 @@
-export const cart = [];
+export let cart = [];
 export function showAddedToCartMessage(productId, quantity) {
     let found = false;
 
@@ -25,4 +25,12 @@ export function showAddedToCartMessage(productId, quantity) {
             .innerHTML = totalQuantity;
 
         console.log(cart);
+}
+
+
+export function removeFromCart(productId) {
+    const index = cart.findIndex(item => item.productId === productId);
+    if (index !== -1) {
+        cart.splice(index, 1);
+    }
 }
