@@ -1,4 +1,4 @@
-const products = [
+/*const products = [
 {
     image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
     name: 'Black and Gray Athletic Cotton Socks - 6 Pairs',
@@ -16,8 +16,17 @@ const products = [
     name: 'Adults Plain Cotton T-Shirt 2-Pack - Teal',
     rating: { stars: 4.5, count: 56 },
     price: 799
+},
+{
+    image: 'images/products/black-2-slot-toaster.jpg',
+    name: 'Black 2-Slot Toaster',
+    rating: {
+        stars: 5,
+        count: 2197
+    },
+    price: 1899
 }
-];
+];*/
 
 let productsHTML = '';
 
