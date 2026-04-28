@@ -1,4 +1,4 @@
-import { cart } from "../data/cart.js";
+import { cart, showAddedToCartMessage } from "../data/cart.js";
 import { products } from "../data/products.js";
 /*const products = [
 {
@@ -81,10 +81,8 @@ products.forEach(product => {
     </div>`;
 });
 
-// Debug check
 console.log(productsHTML);
 
-// Render to page
 const grid = document.querySelector('.js-products-grid');
 
 if (grid) {
@@ -92,6 +90,7 @@ if (grid) {
 } else {
     console.error('Grid not found!');
 }
+
 
 
 document.querySelectorAll('.js-add-to-cart')
@@ -103,31 +102,7 @@ document.querySelectorAll('.js-add-to-cart')
             .closest('.product-container')
             .querySelector('select').value);
 
-        let found = false;
+        showAddedToCartMessage(productId, quantity);
 
-        cart.forEach(item => {
-            if (item.productId === productId) {
-                item.quantity += quantity;
-                found = true;
-            }
-        });
-
-        if (!found) {
-            cart.push({
-                productId: productId,
-                quantity: quantity
-            });
-        }
-
-        // Update total cart UI
-        let totalQuantity = 0;
-        cart.forEach(item => {
-            totalQuantity += item.quantity;
-        });
-
-        document.querySelector('.js-cart-quantity')
-            .innerHTML = totalQuantity;
-
-        console.log(cart);
     });
 });
