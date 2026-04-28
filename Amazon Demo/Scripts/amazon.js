@@ -1,5 +1,6 @@
-import { cart, showAddedToCartMessage } from "../data/cart.js";
+import {cart, showAddedToCartMessage, removeFromCart} from "../data/cart.js";
 import { products } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
 /*const products = [
 {
     image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
