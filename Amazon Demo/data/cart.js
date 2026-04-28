@@ -1,4 +1,11 @@
-export let cart = [];
+export let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+
+function saveCartToStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+
 export function showAddedToCartMessage(productId, quantity) {
     let found = false;
 
@@ -25,6 +32,7 @@ export function showAddedToCartMessage(productId, quantity) {
             .innerHTML = totalQuantity;
 
         console.log(cart);
+        saveCartToStorage();
 }
 
 
@@ -33,4 +41,7 @@ export function removeFromCart(productId) {
     if (index !== -1) {
         cart.splice(index, 1);
     }
+    saveCartToStorage();
 }
+
+
