@@ -28,7 +28,7 @@
     price: 1899
 }
 ];*/
-import { getCart, showAddedToCartMessage, getCartQuantity } from "../data/cart.js";
+import { getCart, addToCart, getCartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -103,7 +103,7 @@ document.querySelectorAll('.js-add-to-cart')
                   .querySelector('select').value
         );
 
-        showAddedToCartMessage(productId, quantity);
+        addToCart(productId, quantity);
 
         // 🔥 update cart count instantly
         document.querySelector('.js-cart-quantity').innerHTML = getCartQuantity();

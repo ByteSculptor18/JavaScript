@@ -1,13 +1,11 @@
-import { getCart, removeFromCart } from "../data/cart.js";
+import { getCart, removeFromCart, updateCartQuantity, updateDeliveryOption } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
-// 🔥 Render Cart
 function renderCart() {
     const cart = getCart();
-
     let cartSummaryHTML = '';
 
     cart.forEach(item => {
@@ -15,37 +13,35 @@ function renderCart() {
         const quantity = item.quantity;
 
         const matchingProduct = products.find(product => product.id === productId);
-
         if (!matchingProduct) return;
 
-        // ✅ Move deliveryoptionsHTML inside the forEach so it has access to matchingProduct
         function deliveryOptionsHTML() {
-            return deliveryOptions.map(option => {          // ✅ map instead of forEach
-                const today = dayjs();
-                const deliveryDate = today
+            return deliveryOptions.map(option => {
+                const deliveryDate = dayjs()
                     .add(option.deliveryDays, 'day')
                     .format('dddd, MMMM D');
-                const priceText = option.price === 0 ?
-                    'FREE Shipping' : formatCurrency(option.price);
+                const priceText = option.price === 0
+                    ? 'FREE Shipping'
+                    : formatCurrency(option.price);
+
+                // Mark the currently selected delivery option as checked
+                const isChecked = option.id === item.deliveryOptionId ? 'checked' : '';
 
                 return `
                 <div class="delivery-option">
-                    <input type="radio"
-                    class="delivery-option-input"
-                    name="delivery-option-${matchingProduct.id}">
+                    <input type="radio" ${isChecked}
+                        class="delivery-option-input"
+                        name="delivery-option-${matchingProduct.id}"
+                        data-product-id="${matchingProduct.id}"
+                        data-delivery-option-id="${option.id}">
                     <div>
-                        <div class="delivery-option-date">
-                            ${deliveryDate}
-                        </div>
-                        <div class="delivery-option-price">
-                            ${priceText}
-                        </div>
+                        <div class="delivery-option-date">${deliveryDate}</div>
+                        <div class="delivery-option-price">${priceText}</div>
                     </div>
-                </div>`;                                    // ✅ return the template literal
+                </div>`;
             }).join('');
         }
 
-        // ✅ Use the first delivery option's date as the display delivery date
         const deliveryDate = dayjs()
             .add(deliveryOptions[0].deliveryDays, 'day')
             .format('dddd, MMMM D');
@@ -61,18 +57,34 @@ function renderCart() {
                 <img class="product-image" src="${matchingProduct.image}">
 
                 <div class="cart-item-details">
-                    <div class="product-name">
-                        ${matchingProduct.name}
-                    </div>
-
-                    <div class="product-price">
-                        ${formatCurrency(matchingProduct.price)}
-                    </div>
+                    <div class="product-name">${matchingProduct.name}</div>
+                    <div class="product-price">${formatCurrency(matchingProduct.price)}</div>
 
                     <div class="product-quantity">
                         Quantity:
-                        <span class="quantity-label">${quantity}</span>
-                        <span class="update-quantity-link link-primary">Update</span>
+                        <span class="quantity-label js-quantity-label" 
+                            data-product-id="${matchingProduct.id}">
+                            ${quantity}
+                        </span>
+
+                        <!--Update input (hidden until Update is clicked) -->
+                        <input class="quantity-input js-quantity-input" 
+                            type="number" min="1"
+                            value="${quantity}"
+                            data-product-id="${matchingProduct.id}"
+                            style="display: none; width: 50px;">
+
+                        <span class="update-quantity-link link-primary js-update-item"
+                            data-product-id="${matchingProduct.id}">
+                            Update
+                        </span>
+
+                        <span class="save-quantity-link link-primary js-save-item"
+                            data-product-id="${matchingProduct.id}"
+                            style="display: none;">
+                            Save
+                        </span>
+
                         <span class="delete-quantity-link link-primary js-delete-item"
                             data-product-id="${matchingProduct.id}">
                             Delete
@@ -81,34 +93,63 @@ function renderCart() {
                 </div>
 
                 <div class="delivery-options">
-                    <div class="delivery-options-title">
-                        Choose a delivery option:
-                    </div>
-                    ${deliveryOptionsHTML()}        
+                    <div class="delivery-options-title">Choose a delivery option:</div>
+                    ${deliveryOptionsHTML()}
                 </div>
             </div>
-        </div>
-        `;
+        </div>`;
     });
 
-    // ✅ Update the DOM after building the full HTML string
     const cartSummaryElement = document.querySelector('.js-order-summary');
     if (cartSummaryElement) {
         cartSummaryElement.innerHTML = cartSummaryHTML || '<div>Your cart is empty.</div>';
     }
 }
 
-// ✅ Event listener outside renderCart so it's only attached once
-document.querySelector('.js-order-summary')
-    .addEventListener('click', (e) => {
-        const deleteBtn = e.target.closest('.js-delete-item');
-        if (!deleteBtn) return;
+document.querySelector('.js-order-summary').addEventListener('click', (e) => {
 
+    // Handle Delete
+    const deleteBtn = e.target.closest('.js-delete-item');
+    if (deleteBtn) {
         const productId = deleteBtn.getAttribute('data-product-id');
-        console.log('Deleting product with id:', productId);
-
         removeFromCart(productId);
         renderCart();
-    });
+        return;
+    }
+
+    // Handle Update — show input and Save button
+    const updateBtn = e.target.closest('.js-update-item');
+    if (updateBtn) {
+        const productId = updateBtn.getAttribute('data-product-id');
+        const container = document.querySelector(`.js-cart-item-container[data-product-id="${productId}"]`);
+
+        container.querySelector('.js-quantity-label').style.display = 'none';
+        container.querySelector('.js-quantity-input').style.display = 'inline';
+        container.querySelector('.js-update-item').style.display = 'none';
+        container.querySelector('.js-save-item').style.display = 'inline';
+        return;
+    }
+
+    // Handle Save — read input value and update cart
+    const saveBtn = e.target.closest('.js-save-item');
+    if (saveBtn) {
+        const productId = saveBtn.getAttribute('data-product-id');
+        const container = document.querySelector(`.js-cart-item-container[data-product-id="${productId}"]`);
+        const newQuantity = parseInt(container.querySelector('.js-quantity-input').value);
+
+        updateCartQuantity(productId, newQuantity);
+        renderCart();
+        return;
+    }
+
+    // Handle delivery option change
+    const deliveryInput = e.target.closest('.delivery-option-input');
+    if (deliveryInput) {
+        const productId = deliveryInput.getAttribute('data-product-id');
+        const deliveryOptionId = deliveryInput.getAttribute('data-delivery-option-id');
+        updateDeliveryOption(productId, deliveryOptionId);
+        renderCart();
+    }
+});
 
 renderCart();
