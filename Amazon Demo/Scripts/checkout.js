@@ -1,4 +1,4 @@
-import { getCart, removeFromCart, updateCartQuantity, updateDeliveryOption } from "../data/cart.js";
+import { getCart, removeFromCart, updateCartQuantity, updateDeliveryOption, decrementCartItem } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
@@ -112,7 +112,7 @@ document.querySelector('.js-order-summary').addEventListener('click', (e) => {
     const deleteBtn = e.target.closest('.js-delete-item');
     if (deleteBtn) {
         const productId = deleteBtn.getAttribute('data-product-id');
-        removeFromCart(productId);
+        decrementCartItem(productId);  // was removeFromCart(productId)
         renderCart();
         return;
     }

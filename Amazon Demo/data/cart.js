@@ -75,3 +75,20 @@ export function updateDeliveryOption(productId, deliveryOptionId) {
 export function getCartQuantity() {
     return cart.reduce((total, item) => total + item.quantity, 0);
 }
+
+// Removes 1 quantity; fully removes item if quantity reaches 0
+export function decrementCartItem(productId) {
+    const item = cart.find(item => item.productId === productId);
+
+    if (!item) return;
+
+    if (item.quantity > 1) {
+        item.quantity -= 1;
+    } else {
+        // quantity is 1, so remove the item entirely
+        const index = cart.findIndex(item => item.productId === productId);
+        cart.splice(index, 1);
+    }
+
+    saveCartToStorage();
+}
