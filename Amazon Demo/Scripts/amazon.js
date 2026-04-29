@@ -1,6 +1,4 @@
-import {cart, showAddedToCartMessage, removeFromCart} from "../data/cart.js";
-import { products } from "../data/products.js";
-import { formatCurrency } from "./utils/money.js";
+
 /*const products = [
 {
     image: 'images/products/athletic-cotton-socks-6-pairs.jpg',
@@ -30,6 +28,9 @@ import { formatCurrency } from "./utils/money.js";
     price: 1899
 }
 ];*/
+import { getCart, showAddedToCartMessage, getCartQuantity } from "../data/cart.js";
+import { products } from "../data/products.js";
+import { formatCurrency } from "./utils/money.js";
 
 let productsHTML = '';
 
@@ -82,28 +83,29 @@ products.forEach(product => {
     </div>`;
 });
 
-console.log(productsHTML);
-
 const grid = document.querySelector('.js-products-grid');
 
 if (grid) {
     grid.innerHTML = productsHTML;
-} else {
-    console.error('Grid not found!');
 }
 
+// 🔥 update cart count
+document.querySelector('.js-cart-quantity').innerHTML = getCartQuantity();
 
-
+// 🔥 add to cart logic
 document.querySelectorAll('.js-add-to-cart')
 .forEach(button => {
     button.addEventListener('click', () => {
         const productId = button.dataset.productId;
 
-        const quantity = parseInt(button
-            .closest('.product-container')
-            .querySelector('select').value);
+        const quantity = parseInt(
+            button.closest('.product-container')
+                  .querySelector('select').value
+        );
 
         showAddedToCartMessage(productId, quantity);
 
+        // 🔥 update cart count instantly
+        document.querySelector('.js-cart-quantity').innerHTML = getCartQuantity();
     });
 });

@@ -1,47 +1,51 @@
-export let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let cart = [];
 
+// 🔄 Load cart from localStorage
+function loadCartFromStorage() {
+    const storedCart = JSON.parse(localStorage.getItem('cart'));
+    cart = Array.isArray(storedCart) ? storedCart : [];
+}
 
+// 💾 Save cart to localStorage
 function saveCartToStorage() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+// 🚀 Initialize cart once
+loadCartFromStorage();
 
-export function showAddedToCartMessage(productId, quantity) {
-    let found = false;
-
-        cart.forEach(item => {
-            if (item.productId === productId) {
-                item.quantity += quantity;
-                found = true;
-            }
-        });
-
-        if (!found) {
-            cart.push({
-                productId: productId,
-                quantity: quantity
-            });
-        }
-
-        let totalQuantity = 0;
-        cart.forEach(item => {
-            totalQuantity += item.quantity;
-        });
-
-        document.querySelector('.js-cart-quantity')
-            .innerHTML = totalQuantity;
-
-        console.log(cart);
-        saveCartToStorage();
+// 📦 Get current cart (always fresh)
+export function getCart() {
+    loadCartFromStorage(); // 🔥 ensures latest data
+    return cart;
 }
 
+// ➕ Add to cart
+export function showAddedToCartMessage(productId, quantity) {
+    loadCartFromStorage();
 
-export function removeFromCart(productId) {
-    const index = cart.findIndex(item => item.productId === productId);
-    if (index !== -1) {
-        cart.splice(index, 1);
+    const existingItem = cart.find(item => item.productId === productId);
+
+    if (existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({ productId, quantity });
     }
+
     saveCartToStorage();
 }
 
+export function removeFromCart(productId) {
+    loadCartFromStorage();
 
+    cart = cart.filter(item => item.productId !== productId);
+
+    saveCartToStorage();
+}
+
+// 🔢 Get total quantity (useful for header)
+export function getCartQuantity() {
+    loadCartFromStorage();
+
+    return cart.reduce((total, item) => total + item.quantity, 0);
+}
