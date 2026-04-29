@@ -26,7 +26,7 @@ export function renderPaymentSummary() {
     const taxCents = Math.round(totalBeforeTaxCents * 0.1);
     const totalCents = totalBeforeTaxCents + taxCents;
 
-    // ✅ Bug 1 fix — cart.length = unique products, not total quantity
+    // Bug 1 fix — cart.length = unique products, not total quantity
     const uniqueProductCount = cart.length;
 
     const paymentSummaryHTML = `
