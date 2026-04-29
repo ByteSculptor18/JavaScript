@@ -1,6 +1,7 @@
 import { getCart, removeFromCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
 const today = dayjs();
 const deliveryDate = today.add(7, 'day').format('dddd, MMMM D');
@@ -84,7 +85,7 @@ document.querySelector('.js-order-summary')
     const deleteBtn = e.target.closest('.js-delete-item');
     if (!deleteBtn) return;
 
-    const productId = deleteBtn.getAttribute('data-product-id'); // ✅ FIX
+    const productId = deleteBtn.getAttribute('data-product-id');
 
     console.log('Deleting product with id:', productId);
 
