@@ -42,8 +42,12 @@ function renderCart() {
             }).join('');
         }
 
+        const selectedDeliveryOption = deliveryOptions.find(
+            option => option.id === item.deliveryOptionId
+        ) || deliveryOptions[0]; // fallback to first if none selected
+
         const deliveryDate = dayjs()
-            .add(deliveryOptions[0].deliveryDays, 'day')
+            .add(selectedDeliveryOption.deliveryDays, 'day')
             .format('dddd, MMMM D');
 
         cartSummaryHTML += `
