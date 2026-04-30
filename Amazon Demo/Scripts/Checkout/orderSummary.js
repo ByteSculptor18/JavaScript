@@ -99,7 +99,7 @@ export function renderCart() {
         cartSummaryElement.innerHTML = cartSummaryHTML || '<div>Your cart is empty.</div>';
     }
 
-    // ✅ Always update payment summary after cart renders
+    // Always update payment summary after cart renders
     renderPaymentSummary();
 }
 
@@ -109,7 +109,7 @@ document.querySelector('.js-order-summary').addEventListener('click', (e) => {
     if (deleteBtn) {
         const productId = deleteBtn.getAttribute('data-product-id');
         decrementCartItem(productId);
-        renderCart(); // ✅ renderPaymentSummary called inside renderCart
+        renderCart(); // renderPaymentSummary called inside renderCart
         return;
     }
 
@@ -130,7 +130,7 @@ document.querySelector('.js-order-summary').addEventListener('click', (e) => {
         const container = document.querySelector(`.js-cart-item-container[data-product-id="${productId}"]`);
         const newQuantity = parseInt(container.querySelector('.js-quantity-input').value);
         updateCartQuantity(productId, newQuantity);
-        renderCart(); // ✅ renderPaymentSummary called inside renderCart
+        renderCart(); // renderPaymentSummary called inside renderCart
         return;
     }
 
@@ -139,6 +139,6 @@ document.querySelector('.js-order-summary').addEventListener('click', (e) => {
         const productId = deliveryInput.getAttribute('data-product-id');
         const deliveryOptionId = deliveryInput.getAttribute('data-delivery-option-id');
         updateDeliveryOption(productId, deliveryOptionId);
-        renderCart(); // ✅ renderPaymentSummary called inside renderCart
+        renderCart(); // renderPaymentSummary called inside renderCart
     }
 });

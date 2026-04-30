@@ -89,10 +89,10 @@ if (grid) {
     grid.innerHTML = productsHTML;
 }
 
-// 🔥 update cart count
+// update cart count
 document.querySelector('.js-cart-quantity').innerHTML = getCartQuantity();
 
-// 🔥 add to cart logic
+// add to cart logic
 document.querySelectorAll('.js-add-to-cart')
 .forEach(button => {
     button.addEventListener('click', () => {
@@ -105,7 +105,7 @@ document.querySelectorAll('.js-add-to-cart')
 
         addToCart(productId, quantity);
 
-        // 🔥 update cart count instantly
+        // update cart count instantly
         document.querySelector('.js-cart-quantity').innerHTML = getCartQuantity();
     });
 });

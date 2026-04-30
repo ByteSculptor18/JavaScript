@@ -42,7 +42,7 @@ export function removeFromCart(productId) {
 
 // New: update quantity of an existing cart item
 export function updateCartQuantity(productId, newQuantity) {
-    // ✅ Guard: quantity must be a positive whole number
+    // Guard: quantity must be a positive whole number
     if (!Number.isInteger(newQuantity) || newQuantity < 1) {
         console.warn(`Invalid quantity: ${newQuantity}. Must be a positive integer.`);
         return;
