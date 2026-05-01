@@ -11,6 +11,12 @@ function saveCartToStorage() {
 
 loadCartFromStorage();
 
+export function resetCart() {
+    cart = [];
+    localStorage.clear();
+}
+
+
 export function getCart() {
     return cart;
 }

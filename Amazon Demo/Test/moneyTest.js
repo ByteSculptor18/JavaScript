@@ -1,38 +1,25 @@
-import { formatCurrency } from "../Scripts/utils/money.js";
+import { formatCurrency } from '../Scripts/utils/money.js';
 
 
 
-if (formatCurrency(2095) === '$20.95') {
-    console.log('Test passed: formatCurrency(2095) === "$20.95"');
-} else {
-    console.error('Test failed: formatCurrency(2095) !== "$20.95"');
-}
+describe('test Suite: formatCurrency', () => {
+    it('should format 2095 as $20.95', () => {
+        expect(formatCurrency(2095)).toEqual('$20.95');
+    });
 
+    it('should format 0 as $0.00', () => {
+        expect(formatCurrency(0)).toEqual('$0.00');
+    });
 
+    it('should format 2000.5 as $20.01', () => {
+        expect(formatCurrency(2000.5)).toEqual('$20.01');
+    });
 
-if (formatCurrency(0) === '$0.00') {
-    console.log('Test passed: formatCurrency(0) === "$0.00"');
-} else {
-    console.error('Test failed: formatCurrency(0) !== "$0.00"');
-}
+    it('should format 1999.5 as $20.00', () => {
+        expect(formatCurrency(1999.5)).toEqual('$20.00');
+    });
 
-
-
-if (formatCurrency(2000.5) === '$20.01') {
-    console.log('Test passed: formatCurrency(2000.5) === "$20.01"');
-} else {
-    console.error('Test failed: formatCurrency(2000.5) !== "$20.01"');
-}
-
-
-if (formatCurrency(1999.5) === '$20.00') {
-    console.log('Test passed: formatCurrency(1999.5) === "$20.00"');
-} else {
-    console.error('Test failed: formatCurrency(1999.5) !== "$20.00"');
-}
-
-if (formatCurrency(2000.4) === '$20.00') {
-    console.log('Test passed: formatCurrency(2000.4) === "$20.00"');
-} else {
-    console.error('Test failed: formatCurrency(2000.4) !== "$20.00"');
-}
+    it('should format 2000.4 as $20.00', () => {
+        expect(formatCurrency(2000.4)).toEqual('$20.00');
+    });
+});
