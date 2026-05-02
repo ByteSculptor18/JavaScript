@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Promise Example</title>
+    </head>
+    <body>
+        <script>
+            // Create a new Promise
+            const myPromise = new Promise((resolve, reject) => {
+                // Simulate an asynchronous operation
+                setTimeout(() => {
+                    const success = true; // Change to false to test rejection
+                    if (success) {
+                        resolve("Promise resolved successfully!");
+                    } else {
+                        reject("Promise rejected.");
+                    }
+                }, 20);
+            });
+
+            // Handle the Promise
+            myPromise
+                .then((message) => {
+                    console.log(message); // Output: "Promise resolved successfully!"
+                })
+                .catch((error) => {
+                    console.error(error); // Output: "Promise rejected."
+                });
+        </script>
+    </body>
+</html>
